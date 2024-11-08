@@ -1,0 +1,955 @@
+@use "variables" as var;
+@use "_utilities";
+@use "_responsive" as resp;
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+.main-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+// hgroup styling
+.hgroup {
+  margin: 10px 0;
+}
+
+// slide bar styling
+// *******************************************************************************************
+// Container for the entire slide bar
+// *******************************************************************************************
+.slide-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure the slide bar is always on top */
+
+  // Scrollable navigation container
+  .scroll-nav-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+
+    // Scroll buttons (previous and next)
+    .scroll-nav-prev,
+    .scroll-nav-next {
+      background-color: var.$color-dark;
+      color: var.$color-light;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 0 10px;
+      border-radius: 4px;
+      margin-right: 10px;
+
+      &:hover {
+        background-color: var.$color-warning;
+      }
+
+      &:disabled {
+        background-color: var.$color-medium-gray;
+        cursor: not-allowed;
+      }
+    }
+
+    // Add specific margin-right to the next button
+    .scroll-nav-next {
+      margin-right: 20px; // Adjust this value as needed
+    }
+
+    // Scrollable area for the tasks
+    .scroll-nav {
+      flex-grow: 1;
+      overflow-x: auto;
+
+      // For Firefox (only)
+      scrollbar-width: thin;
+      scrollbar-color: var.$color-medium-gray transparent;
+
+      // For Webkit browsers (Chrome, Safari, Edge)
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var.$color-medium-gray;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      // Styling for the slide-bar grid that holds the task links
+      .slide-bar {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 5px;
+        padding: 5px;
+
+        a {
+          display: block;
+          color: white;
+          text-decoration: none;
+          font-size: 14px;
+          text-align: center;
+          padding: 8px;
+          background-color: var.$color-dark;
+          border-radius: 4px;
+
+          &:hover {
+            background-color: var.$color-warning;
+          }
+        }
+      }
+    }
+  }
+
+  // Pagination buttons at the bottom (prev and next), aligned properly
+  // .pagination {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   margin-top: 10px;
+  //   width: 100%;
+  // }
+
+  @media (max-width: 768px) {
+    .scroll-nav-container {
+      flex-direction: row;
+      justify-content: space-between; /* Ensure buttons are on the left and right */
+      align-items: center;
+
+      .scroll-nav-prev,
+      .scroll-nav-next {
+        font-size: 16px;
+        padding: 8px 20px;
+        margin: 10; /* Remove margin to align buttons correctly */
+      }
+
+      .scroll-nav {
+        width: auto;
+        flex-grow: 1;
+        overflow-x: auto;
+
+        .slide-bar {
+          grid-template-columns: repeat(
+            7,
+            1fr
+          ); /* Adjust for smaller screens */
+          justify-content: start; /* Align tasks to the left */
+
+          a {
+            font-size: 14px; /* Adjust font size for smaller screens */
+            padding: 5px; /* Adjust padding for smaller screens */
+            background-color: transparent; /* Remove background color */
+            color: var.$color-dark; /* Change text color */
+            border: none; /* Remove border */
+          }
+        }
+      }
+    }
+  }
+}
+
+// *******************************************************************************************
+// Section Styling
+// *******************************************************************************************
+.my-section {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+  // margin: 40px 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+// *******************************************************************************************
+// Modal Styling
+// *******************************************************************************************
+
+.modal {
+  display: none; // Hidden by default
+  position: fixed; // Stay in place
+  z-index: 1000; // Sit on top
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  // overflow: auto; // Enable scroll if needed
+  background-color: rgba(0, 0, 0, 0.4); // Black background with opacity
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; // Center the modal
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; // Could be more or less, depending on screen size
+    max-width: 600px;
+    max-height: 80vh; // Maximum height of the modal
+    overflow-y: auto; // Enable vertical scrolling if needed
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); // Shadow for better visibility
+
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow-x: auto;
+      white-space: pre-wrap; // Ensures the content wraps
+      max-width: 100%;
+    }
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+// *******************************************************************************************
+// colors for the tasks
+// *******************************************************************************************
+.task1 {
+  color: var.$color-primary;
+  font-size: 24px;
+}
+
+.task2IMG {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  object-fit: cover;
+  object-position: top; /* Adjusts the focus area to the top */
+  transition: transform 0.3s ease;
+  display: block; /* Ensure images are treated as blocks */
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.task2IMG:active {
+  transform: scale(1.1);
+}
+
+// Task2 image inline styling
+#image-container {
+  display: flex; /* Use flexbox to align items side by side */
+  justify-content: center; /* Center the images horizontally */
+  gap: 20px; /* Add some space between images */
+  align-items: flex-start; /* Align items at the top */
+}
+
+.image-item {
+  display: flex; /* Allow stacking of text and button within each item */
+  flex-direction: column; /* Stack the image, button, and paragraph vertically */
+  align-items: center; /* Center-align the items */
+  text-align: center; /* Center the text in paragraphs */
+}
+
+.image-item p {
+  margin: 10px 0; /* Add space around paragraphs */
+}
+
+.image-item button {
+  margin-top: 10px; /* Add space above the button */
+  display: inline-block; /* Ensure buttons are displayed inline */
+}
+
+.txt-center {
+  text-align: center;
+  padding: 10px;
+}
+
+//TASK 5 TABLE STYLING
+.CSSTableGenerator {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 10px 10px 5px #888888;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  overflow: auto; /* Enable both horizontal and vertical scrolling */
+  margin-top: 20px;
+}
+
+.CSSTableGenerator table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.CSSTableGenerator th {
+  background-color: #1c6ea4;
+  border: 1px solid #aaaaaa;
+  padding: 10px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.CSSTableGenerator td {
+  border: 1px solid #aaaaaa;
+  padding: 10px;
+  text-align: left;
+}
+
+.CSSTableGenerator tr:nth-child(even) {
+  background-color: #d0e4f5;
+}
+
+// Additional styling for arrays
+.arrays-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between the two arrays */
+  margin-bottom: 20px; /* Space below the arrays */
+}
+
+.arrays-container > div {
+  flex: 1;
+  text-align: center;
+  border: 1px solid #000000; /* Add border to each array */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+// Task 11 specific styles
+#task11 #box11 {
+  width: 200px;
+  height: 100px;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer; /* Makes the box clickable */
+  transition: transform 0.3s ease; /* Smooth transition for transform */
+  margin: auto; /* Center the box */
+}
+
+// Task 12 specific styles
+#task12 #box {
+  width: 200px;
+  height: 100px;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer; /* Makes the box clickable */
+  transition: transform 0.3s ease; /* Smooth transition for transform */
+  margin: auto; /* Center the box */
+}
+
+// Task 14 specific styles
+
+#task14 #dateDisplay {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// Task 15 specific styles
+#task15 #dateTimeDisplay {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// Task 16 specific styles
+#task16 .arrays-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Ensure the container takes the full height */
+}
+
+#clockContainer {
+  display: inline-block; /* Only as wide as the content */
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px; /* Add padding for a balanced appearance */
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: "Lora", serif;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Optional shadow for better visibility */
+}
+
+// Task 17 specific styles
+#task17 .arrays-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between the button and the text box */
+}
+
+#textBox {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.hidden {
+  display: none; /* Initially hidden */
+}
+
+#showTextBoxBtn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#showTextBoxBtn:hover {
+  background-color: #0056b3;
+}
+
+// Task 18 specific styles
+#task18 .arrays-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the container takes the full height */
+}
+
+#task18 #personInfo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// Task 19 specific styles
+#task19 .arrays-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the container takes the full height */
+}
+
+#task19 #greeting {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// Media query for mobile view
+@media (max-width: 768px) {
+  .arrays-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+#diceContainer img {
+  width: 50px; /* Smaller size for the dice image */
+  height: 50px; /* Smaller size for the dice image */
+  cursor: pointer; /* Makes the dice clickable */
+  transition: transform 0.3s ease; /* Smooth transition for transform */
+}
+
+#diceContainer img:active {
+  animation: rollDice 0.5s; /* Apply the rollDice animation on click */
+}
+
+@keyframes rollDice {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Task 17 specific styles
+#task17 .arrays-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between the button and the text box */
+}
+
+#textField {
+  display: none; /* Initially hidden */
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+#openButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#openButton:hover {
+  background-color: #0056b3;
+}
+
+// Task 18 specific styles
+#task18 input[type="email"] {
+  width: 200px; /* Set a fixed width for the email input */
+  padding: 0.5rem;
+  margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+#task18 input[type="submit"] {
+  width: auto; /* Adjust width to fit content */
+  padding: 0.5rem;
+  margin-bottom: 0;
+}
+
+// Task 20 specific styles
+#task20 .arrays-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the container takes the full height */
+}
+
+#task20 input[type="email"] {
+  width: 200px; /* Set a fixed width for the email input */
+  padding: 0.5rem;
+  margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+#task20 input[type="submit"] {
+  width: auto; /* Adjust width to fit content */
+  padding: 0.5rem;
+  margin-bottom: 0;
+}
+
+// Task 21 specific styles
+#imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 670px; /* Set a maximum width for the container */
+  height: auto;
+  border: 2px solid var.$color-dark; /* Add border around the container */
+  box-sizing: border-box; /* Include border in the element's total width and height */
+  overflow: hidden; /* Ensure content stays within the container */
+
+  img {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+  }
+
+  .infoBox {
+    display: none;
+    position: absolute;
+    background-color: var.$color-light;
+    border: 1px solid var.$color-dark;
+    padding: 20px;
+    z-index: 10;
+    transform: translate(-50%, -50%); /* Center the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center; /* Center the text */
+
+    h2 {
+      color: var.$color-dark-green;
+      font-size: 1.2rem; /* Adjust font size for smaller screens */
+    }
+
+    p {
+      color: var.$color-dark;
+      font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .closeButton {
+      display: block;
+      margin: 10px auto 0; /* Center the button and add margin */
+      background-color: var.$color-light;
+      color: var.$color-danger;
+      border: 2px solid var.$color-dark-gray;
+      padding: 5px 10px;
+      border-radius: 0; /* Make the button square */
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      text-align: center;
+
+      &:hover {
+        background-color: var.$color-warning;
+        border: 2px solid var.$color-danger;
+      }
+
+      i {
+        font-size: 16px; /* Adjust the icon size */
+        color: var.$color-danger; /* Make the icon red */
+      }
+    }
+  }
+
+  .yellowBorder {
+    position: absolute;
+    border: 3px solid var.$color-danger;
+    pointer-events: none;
+  }
+
+  #border1 {
+    top: 120px;
+    left: 175px;
+    width: 50px;
+    height: 55px;
+  }
+
+  #border2 {
+    top: 200px;
+    left: 315px;
+    width: 80px;
+    height: 80px;
+  }
+
+  #border3 {
+    top: 35px;
+    left: 435px;
+    width: 50px;
+    height: 70px;
+  }
+
+  @media (max-width: 768px) {
+    #border1 {
+      top: 50%;
+      left: 25%;
+      width: 7%;
+      height: 8%;
+    }
+
+    #border2 {
+      top: 73%;
+      left: 46%;
+      width: 10%;
+      height: 15%;
+    }
+
+    #border3 {
+      top: 55%;
+      left: 73%;
+      width: 20%;
+      height: 20%;
+    }
+
+    .infoBox {
+      padding: 10px; /* Adjust padding for smaller screens */
+
+      h2 {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+      }
+
+      p {
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+      }
+
+      .closeButton {
+        margin: 10px auto 0; /* Adjust margin for smaller screens */
+        padding: 5px 8px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Adjust font size for smaller screens */
+
+        i {
+          font-size: 14px; /* Adjust the icon size for smaller screens */
+        }
+      }
+    }
+  }
+}
+
+// task 3 and 8 specific styles
+.task3-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.task3-inputs,
+.task3-results {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+
+.task3-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; // Small space between inputs
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    label {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px; // Increase padding for larger input
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px; // Increase width for larger input
+      margin-right: 5px; // Add space between input and unit
+    }
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: var.$color-dark;
+    color: var.$color-light;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: auto; // Ensure the button does not take full width
+    align-self: center; // Center the button within its container
+
+    &:hover {
+      background-color: var.$color-warning;
+    }
+  }
+}
+
+.task3-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// task 18 specific styles
+.task3-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// task 18 specific styles
+.person-info {
+  display: flex;
+  flex-direction: row; // Display items horizontally
+  gap: 10px; // Space between items
+  flex-wrap: wrap; // Allow wrapping to the next line if necessary
+  justify-content: center; // Center the items horizontally
+}
+
+.person-row {
+  padding: 10px;
+  text-align: center; // Center the text
+}
+
+.person-row:not(:first-child) {
+  border-left: 2px solid #ccc; // Add left border to all except the first child
+}
+
+// Different background colors for each name
+.person-row:nth-child(1) {
+  background-color: var.$color-gold // Light gray
+}
+
+.person-row:nth-child(2) {
+  background-color:  var.$color-info ; // Slightly darker gray
+}
+
+.person-row:nth-child(3) {
+  background-color:  var.$color-success; // Even darker gray
+}
+
+@media (max-width: 768px) {
+  .person-info {
+    flex-direction: column; // Stack items vertically on mobile view
+    align-items: center; // Center the items vertically
+  }
+
+  .person-row {
+    width: 100%; // Ensure full width on mobile view
+    border-left: none; // Remove left border on mobile view
+    border-bottom: 2px solid #ccc; // Add bottom border on mobile view
+  }
+
+  .person-row:not(:last-child) {
+    margin-bottom: 10px; // Add space between rows on mobile view
+  }
+}
+
+// Task 21 specific styles
+#imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 670px; /* Set a maximum width for the container */
+  height: auto;
+  border: 2px solid var.$color-dark; /* Add border around the container */
+  box-sizing: border-box; /* Include border in the element's total width and height */
+
+  img {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+  }
+}
+
+
+// // Task 21 specific styles
+// #imageContainer {
+//   position: relative;
+//   width: 100%;
+//   max-width: 670px; /* Set a maximum width for the container */
+//   height: auto;
+//   border: 2px solid var.$color-dark; /* Add border around the container */
+//   box-sizing: border-box; /* Include border in the element's total width and height */
+
+//   img {
+//     width: 100%; /* Make the image responsive */
+//     height: auto;
+//   }
+
+//   .infoBox {
+//     display: none;
+//     position: absolute;
+//     background-color: var.$color-light;
+//     border: 1px solid var.$color-dark;
+//     padding: 20px;
+//     z-index: 10;
+//     transform: translate(-50%, -50%); /* Center the box */
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//     border-radius: 8px;
+
+//     h2 {
+//       color: var.$color-dark-green;
+//     }
+
+//     p {
+//       color: var.$color-dark;
+//     }
+//   }
+
+//   .closeButton {
+//     position: absolute;
+//     top: 10px;
+//     right: 10px;
+//     background-color: var.$color-danger;
+//     color: var.$color-light;
+//     border: none;
+//     padding: 5px 5px;
+//     border-radius: 50%;
+//     cursor: pointer;
+//     font-size: 16px;
+//     line-height: 1;
+//     text-align: center;
+
+//     &:hover {
+//       background-color: darken(var.$color-danger, 10%);
+//     }
+//   }
+
+//   .yellowBorder {
+//     position: absolute;
+//     border: 2px solid var.$color-warning;
+//     pointer-events: none;
+//   }
+
+//   #border1 {
+//     top: 180px;
+//     left: 170px;
+//     width: 50px;
+//     height: 55px;
+//   }
+
+//   #border2 {
+//     top: 270px;
+//     left: 320px;
+//     width: 50px;
+//     height: 80px;
+//   }
+
+//   #border3 {
+//     top: 210px;
+//     left: 490px;
+//     width: 120px;
+//     height: 70px;
+//   }
+// }
+
+// // *******************************************************************************************
+// // colors for the tasks
+// // *******************************************************************************************
+// .task2IMG {
+//   width: 200px;
+//   height: 200px;
+//   border: 2px solid #ddd;
+//   border-radius: 5px;
+//   padding: 5px;
+//   object-fit: cover;
+//   object-position: top; /* Adjusts the focus area to the top */
+//   transition: transform 0.3s ease;
+//   display: block;
+//   margin-left: 0;
+//   padding-left: 0;
+// }
+
+// .task2IMG:active {
+//   transform: scale(1.1);
+// }
+
+// // task2 image inline styling
+// #image-container {
+//   display: flex; /* Use flexbox to align items side by side */
+//   gap: 20px; /* Add some space between images */
+// }
+
+// #image-container-1,
+// #image-container-2 {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   margin-bottom: 20px;
+// }
+
+// *******************************************************************************************
+// colors for the tasks
+// *******************************************************************************************

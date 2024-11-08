@@ -1,0 +1,189 @@
+.underline, .home-page .content-wrapper .main-content .blog-post .post-header h1.blog-title {
+  position: relative;
+}
+.underline::before, .home-page .content-wrapper .main-content .blog-post .post-header h1.blog-title::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 90%;
+  border-bottom: 1px solid #fe6f27;
+}
+.underline::after, .home-page .content-wrapper .main-content .blog-post .post-header h1.blog-title::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 20%;
+  border-bottom: 7px solid #fe6f27;
+}
+
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.home-page .content-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+}
+.home-page .content-wrapper .main-content {
+  width: 75%;
+  padding-right: 20px;
+}
+.home-page .content-wrapper .main-content .blog-post {
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+.home-page .content-wrapper .main-content .blog-post .post-header {
+  margin: 0;
+  padding: 20px 0;
+}
+.home-page .content-wrapper .main-content .blog-post .post-header h1.blog-title {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+  position: relative;
+  padding: 0 0 10px 10px;
+}
+.home-page .content-wrapper .main-content .blog-post .post-container {
+  display: flex;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  overflow: hidden;
+}
+.home-page .content-wrapper .main-content .blog-post .post-container .post-image {
+  flex: 1 1 50%;
+}
+.home-page .content-wrapper .main-content .blog-post .post-container .post-image img {
+  width: 100%;
+  height: auto;
+}
+.home-page .content-wrapper .main-content .blog-post .post-container .post-content {
+  flex: 1 1 50%;
+  padding: 15px;
+}
+.home-page .content-wrapper .main-content .blog-post .post-container .post-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #212529;
+}
+.home-page .content-wrapper .sidebar {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+.home-page .content-wrapper .sidebar .card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+.home-page .content-wrapper .sidebar .card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.home-page .content-wrapper .sidebar .card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+.home-page .content-wrapper .sidebar .card p {
+  font-size: 14px;
+  color: #212529;
+}
+
+.social-media {
+  position: fixed;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+.social-media .social-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #495e57;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  transition: background-color 0.3s ease;
+}
+.social-media .social-icon:hover {
+  background-color: #fe6f27;
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    flex-direction: column;
+  }
+  .home-page .content-wrapper {
+    flex-direction: column;
+  }
+  .home-page .content-wrapper .main-content {
+    width: 100%;
+    padding-right: 0;
+  }
+  .home-page .content-wrapper .main-content .blog-post .post-container {
+    flex-direction: column;
+  }
+  .home-page .content-wrapper .sidebar {
+    width: 100%;
+  }
+  .social-media {
+    left: 5px;
+  }
+  .social-media .social-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+}
+.question-btn {
+  background-color: #495e57;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.question-btn:hover {
+  background-color: #fe6f27;
+}
+
+.post-meta {
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif !important;
+  color: #7a7a7a;
+}
+.post-meta .post-date {
+  margin-right: 10px;
+}
+
+.aside-text {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 15px;
+  color: #333;
+  margin: 0;
+  position: relative;
+  padding: 0 0 10px 10px;
+}
+
+/*# sourceMappingURL=style.css.map */

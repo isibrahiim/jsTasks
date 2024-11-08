@@ -1,0 +1,888 @@
+// // // @use "variables" as var;
+
+// // // .home-page {
+// // //   display: flex;
+// // //   justify-content: space-between;
+// // //   padding: 20px;
+
+// // //   .content-wrapper {
+// // //     display: flex;
+// // //     width: 100%;
+// // //     align-items: flex-start; // Aligns items to the top of the container
+
+// // //     .main-content {
+// // //       width: 75%;
+// // //       padding-right: 20px;
+
+// // //       .blog-post {
+        
+// // //         border-radius: 8px; // Same as sidebar
+// // //         box-shadow: var.$header-box-shadow;
+// // //         background-color: var.$color-light; 
+// // //         // padding: 10px;
+// // //         .post-header {
+// // //           // background: var.$color-light;
+// // //           // border-radius: 8px;
+// // //           border-bottom: 1px solid #fe6f27; // Long border line
+// // //           padding-left: 10px;
+// // //           padding-bottom: 10px;
+// // //           margin-bottom: 20px;
+
+// // //           h1.blog-title {
+// // //             font-size: 24px;
+// // //             color: var.$color-dark-charcoal;
+// // //             margin: 0;
+// // //             position: relative;
+
+// // //             &::before {
+// // //               content: "";
+// // //               position: absolute;
+// // //               left: 0;
+// // //               bottom: -10px; // Adjust this to place the short line correctly
+// // //               width: 20%; // Short line length
+// // //               border-bottom: 7px solid #fe6f27; // Short line color
+// // //             }
+// // //           }
+// // //         }
+
+// // //         .post-container {
+// // //           display: flex;
+// // //           border-radius: 8px; // Same as sidebar
+// // //           box-shadow: var.$header-box-shadow;
+// // //           background-color: var.$color-light; // Same as sidebar
+// // //           overflow: hidden; // Ensure content doesn't spill outside border
+
+// // //           .post-image {
+// // //             flex: 1 1 50%; // Adjust the image width to take 50% of the space
+// // //             img {
+// // //               width: 100%;
+// // //               height: auto;
+// // //               border-radius: 0; // No extra border-radius since container handles it
+// // //             }
+// // //           }
+
+// // //           .post-content {
+// // //             flex: 1 1 50%; // Adjust the content width to take 50% of the space
+// // //             padding: 15px;
+
+// // //             p {
+// // //               font-size: 16px;
+// // //               line-height: 1.6;
+// // //               color: var.$color-dark;
+// // //             }
+// // //           }
+// // //         }
+// // //       }
+// // //     }
+
+// // //     .sidebar {
+// // //       width: 25%;
+// // //       display: flex;
+// // //       flex-direction: column;
+// // //       // gap: 20px;
+
+// // //       .card {
+// // //         background-color: var.$color-light; // Same as post-container
+// // //         padding: 15px;
+// // //         border-radius: 8px; // Same as post-container
+// // //         box-shadow: var.$header-box-shadow;
+// // //         text-align: center;
+
+// // //         img {
+// // //           width: 100%;
+// // //           height: auto;
+// // //           border-radius: 8px;
+// // //           margin-bottom: 10px;
+// // //         }
+
+// // //         h3 {
+// // //           font-size: 18px;
+// // //           margin-bottom: 10px;
+// // //           color: var.$color-dark-charcoal;
+// // //         }
+
+// // //         p {
+// // //           font-size: 14px;
+// // //           color: var.$color-dark;
+// // //         }
+// // //       }
+// // //     }
+// // //   }
+// // // }
+
+
+
+// // // // Responsive adjustments
+// // // @media (max-width: 768px) {
+// // //   .home-page {
+// // //     flex-direction: column;
+
+// // //     .content-wrapper {
+// // //       flex-direction: column;
+
+// // //       .main-content {
+// // //         width: 100%;
+// // //         padding-right: 0;
+
+// // //         .blog-post {
+// // //           .post-container {
+// // //             flex-direction: column; // Stack image and content vertically on mobile
+// // //           }
+// // //         }
+// // //       }
+
+// // //       .sidebar {
+// // //         width: 100%;
+// // //       }
+// // //     }
+// // //   }
+// // // }
+
+// // // // button styling 
+// // // // Button Styling
+// // // .question-btn {
+// // //   background-color: #495e57; // Green background
+// // //   border: none; // Remove borders
+// // //   color: white; // White text
+// // //   padding: 10px 20px; // Some padding
+// // //   text-align: center; // Centered text
+// // //   text-decoration: none; // Remove underline
+// // //   display: inline-block; // Get the element to line up correctly
+// // //   font-size: 16px; // Increase font size
+// // //   margin: 10px 2px; // Some margin
+// // //   cursor: pointer; // Pointer/hand icon
+// // //   border-radius: 5px; // Rounded corners
+
+// // //   &:hover {
+// // //     background-color: #fe6f27; // Darker green on hover
+// // //   }
+// // // }
+
+
+
+// // @use "variables" as var;
+
+// // // Reusable underline class for two lines
+// // .underline {
+// //   position: relative;
+
+// //   &::before {
+// //     content: "";
+// //     position: absolute;
+// //     left: 0;
+// //     bottom: 0; // Long underline position
+// //     width: 100%; // Full width for the long underline
+// //     border-bottom: 1px solid #fe6f27; // Thin line (1px)
+   
+// //   }
+
+// //   &::after {
+// //     content: "";
+// //     position: absolute;
+// //     left: 0;
+// //     bottom: 0; // Align with the end of the thin line
+// //     width: 20%; // Short underline length
+// //     border-bottom: 7px solid #fe6f27; // Thick line (7px)
+    
+// //   }
+// // }
+
+// // .home-page {
+// //   display: flex;
+// //   justify-content: space-between;
+// //   padding: 20px;
+// //   max-width: 1200px; // Set a max width to control the page width
+// //   margin: 0 auto; // This will center the page horizontally
+
+// //   .content-wrapper {
+// //     display: flex;
+// //     width: 100%;
+// //     align-items: flex-start; // Aligns items to the top of the container
+
+// //     .main-content {
+// //       width: 75%;
+// //       padding-right: 20px;
+
+// //       .blog-post {
+// //         border-radius: 8px; // Same as sidebar
+// //         box-shadow: var.$header-box-shadow;
+// //         background-color: var.$color-light;
+
+// //         .post-header {
+// //           padding-left: 10px;
+// //           padding-bottom: 10px;
+// //           margin-bottom: 20px;
+
+// //           h1.blog-title {
+// //             font-size: 24px;
+// //             color: var.$color-dark-charcoal;
+// //             margin: 0;
+// //             padding: 10px;
+// //             @extend .underline; // Apply the underline class
+// //           }
+// //         }
+
+// //         .post-container {
+// //           display: flex;
+// //           border-radius: 8px; // Same as sidebar
+// //           box-shadow: var.$header-box-shadow;
+// //           background-color: var.$color-light;
+// //           overflow: hidden;
+
+// //           .post-image {
+// //             flex: 1 1 50%;
+// //             img {
+// //               width: 100%;
+// //               height: auto;
+// //               border-radius: 0;
+// //             }
+// //           }
+
+// //           .post-content {
+// //             flex: 1 1 50%;
+// //             padding: 15px;
+
+// //             p {
+// //               font-size: 16px;
+// //               line-height: 1.6;
+// //               color: var.$color-dark;
+// //             }
+// //           }
+// //         }
+// //       }
+// //     }
+
+// //     .sidebar {
+// //       width: 25%;
+// //       display: flex;
+// //       flex-direction: column;
+
+// //       .post-header {
+// //         @extend .underline; // Apply the underline to the sidebar title
+// //         margin-bottom: 20px;
+// //         padding-left: 10px;
+// //       }
+
+// //       .card {
+// //         background-color: var.$color-light;
+// //         padding: 15px;
+// //         border-radius: 8px;
+// //         box-shadow: var.$header-box-shadow;
+// //         text-align: center;
+
+// //         img {
+// //           width: 100%;
+// //           height: auto;
+// //           border-radius: 8px;
+// //           margin-bottom: 10px;
+// //         }
+
+// //         h3 {
+// //           font-size: 18px;
+// //           margin-bottom: 10px;
+// //           color: var.$color-dark-charcoal;
+// //         }
+
+// //         p {
+// //           font-size: 14px;
+// //           color: var.$color-dark;
+// //         }
+// //       }
+// //     }
+// //   }
+// // }
+
+// // // Responsive adjustments
+// // @media (max-width: 768px) {
+// //   .home-page {
+// //     flex-direction: column;
+
+// //     .content-wrapper {
+// //       flex-direction: column;
+
+// //       .main-content {
+// //         width: 100%;
+// //         padding-right: 0;
+
+// //         .blog-post {
+// //           .post-container {
+// //             flex-direction: column; // Stack image and content vertically on mobile
+// //           }
+// //         }
+// //       }
+
+// //       .sidebar {
+// //         width: 100%;
+// //       }
+// //     }
+// //   }
+// // }
+
+// // // Button Styling
+// // .question-btn {
+// //   background-color: #495e57;
+// //   border: none;
+// //   color: white;
+// //   padding: 10px 20px;
+// //   text-align: center;
+// //   text-decoration: none;
+// //   display: inline-block;
+// //   font-size: 16px;
+// //   margin: 10px 2px;
+// //   cursor: pointer;
+// //   border-radius: 5px;
+
+// //   &:hover {
+// //     background-color: #fe6f27;
+// //   }
+// // }
+
+// @use "variables" as var;
+
+// .home-page {
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 20px;
+//   margin: 0 auto;
+//   max-width: 1200px;
+
+//   .content-wrapper {
+//     display: flex;
+//     width: 100%;
+//     align-items: flex-start;
+
+//     .main-content {
+//       width: 75%;
+//       padding-right: 20px;
+
+//       .blog-post {
+//         border-radius: 8px;
+//         box-shadow: var.$header-box-shadow;
+//         background-color: var.$color-light;
+
+//         .post-header {
+//           border-bottom: 1px solid #fe6f27;
+//           // padding-left: 10px;
+//           padding-bottom: 10px;
+//           margin-bottom: 20px;
+
+//           h1.blog-title {
+//             font-size: 24px;
+//             color: var.$color-dark-charcoal;
+//             margin: 0;
+//             position: relative;
+//           padding-left: 10px;
+
+
+//             &::before {
+//               content: "";
+//               position: absolute;
+//               left: 0;
+//               bottom: -10px;
+//               width: 20%;
+//               border-bottom: 7px solid #fe6f27;
+//             }
+//           }
+//         }
+
+//         .post-container {
+//           display: flex;
+//           border-radius: 8px;
+//           box-shadow: var.$header-box-shadow;
+//           background-color: var.$color-light;
+//           overflow: hidden;
+
+//           .post-image {
+//             flex: 1 1 50%;
+//             img {
+//               width: 100%;
+//               height: auto;
+//             }
+//           }
+
+//           .post-content {
+//             flex: 1 1 50%;
+//             padding: 15px;
+
+//             p {
+//               font-size: 16px;
+//               line-height: 1.6;
+//               color: var.$color-dark;
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     .sidebar {
+//       width: 25%;
+//       display: flex;
+//       flex-direction: column;
+
+//       .card {
+//         background-color: var.$color-light;
+//         padding: 15px;
+//         border-radius: 8px;
+//         box-shadow: var.$header-box-shadow;
+//         text-align: center;
+
+//         img {
+//           width: 100%;
+//           height: auto;
+//           margin-bottom: 10px;
+//         }
+
+//         h3 {
+//           font-size: 18px;
+//           margin-bottom: 10px;
+//           color: var.$color-dark-charcoal;
+//         }
+
+//         p {
+//           font-size: 14px;
+//           color: var.$color-dark;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // Social Media Icons styling
+// .social-media {
+//   position: fixed;
+//   right: 10px; // Position the icons outside the content container
+//   top: 50%;
+//   transform: translateY(-50%);
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+
+//   .social-icon {
+//     display: block;
+//     width: 40px;
+//     height: 40px;
+//     background-color: #495e57; // Background color for the icons
+//     color: white;
+//     text-align: center;
+//     line-height: 40px;
+//     border-radius: 50%;
+//     font-size: 20px;
+//     transition: background-color 0.3s ease;
+
+//     &:hover {
+//       background-color: #fe6f27; // Color on hover
+//     }
+//   }
+// }
+
+// // Responsive adjustments
+// @media (max-width: 768px) {
+//   .home-page {
+//     flex-direction: column;
+
+//     .content-wrapper {
+//       flex-direction: column;
+
+//       .main-content {
+//         width: 100%;
+//         padding-right: 0;
+
+//         .blog-post {
+//           .post-container {
+//             flex-direction: column; // Stack image and content vertically on mobile
+//           }
+//         }
+//       }
+
+//       .sidebar {
+//         width: 100%;
+//       }
+//     }
+//   }
+
+//   // Adjust social media icons on mobile
+//   .social-media {
+//     right: 5px; // Slightly adjust the position for mobile view
+//     .social-icon {
+//       width: 35px;
+//       height: 35px;
+//       font-size: 18px;
+//     }
+//   }
+// }
+
+// // Button Styling
+// .question-btn {
+//   background-color: #495e57;
+//   border: none;
+//   color: white;
+//   padding: 10px 20px;
+//   text-align: center;
+//   text-decoration: none;
+//   display: inline-block;
+//   font-size: 16px;
+//   margin: 10px 2px;
+//   cursor: pointer;
+//   border-radius: 5px;
+
+//   &:hover {
+//     background-color: #fe6f27;
+//   }
+// }
+
+@use "variables" as var;
+
+// Standalone Underline Styling
+.underline {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+  left: 10px;
+    bottom: 0; // Long underline position
+    width: 90%; // Full width for the long underline
+    border-bottom: 1px solid #fe6f27; // Thin line (1px)
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 0; // Align with the end of the thin line
+    width: 20%; // Short underline length
+    border-bottom: 7px solid #fe6f27; // Thick line (7px)
+  }
+}
+
+// Home Page Styles
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  .content-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+
+    .main-content {
+      width: 75%;
+      padding-right: 20px;
+
+      .blog-post {
+        border-radius: 8px;
+        // box-shadow: var.$header-box-shadow;
+        background-color: var.$color-light;
+
+        .post-header {
+          // border-bottom: 1px solid #fe6f27;
+          // padding-bottom: 10px;
+          margin: 0;
+          padding: 20px 0;
+
+          h1.blog-title {
+            font-size: 24px;
+            color: var.$color-dark-charcoal;
+            margin: 0;
+            position: relative;
+            // padding-left: 10px;
+            padding: 0 0 10px 10px;
+            @extend .underline; // Apply the standalone underline class
+          }
+        }
+
+        .post-container {
+          display: flex;
+          border-radius: 8px;
+          // box-shadow: var.$header-box-shadow;
+          background-color: var.$color-light;
+          overflow: hidden;
+
+          .post-image {
+            flex: 1 1 50%;
+            img {
+              width: 100%;
+              height: auto;
+            }
+          }
+
+          .post-content {
+            flex: 1 1 50%;
+            padding: 15px;
+
+            p {
+              font-size: 16px;
+              line-height: 1.6;
+              color: var.$color-dark;
+            }
+          }
+        }
+      }
+    }
+
+    .sidebar {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      background-color: var.$color-light;
+      // box-shadow: var.$header-box-shadow;
+      border-radius: 8px;
+
+      .card {
+        background-color: var.$color-light;
+        padding: 15px;
+        border-radius: 8px;
+        // box-shadow: var.$header-box-shadow;
+        text-align: center;
+
+        img {
+          width: 100%;
+          height: auto;
+          margin-bottom: 10px;
+        }
+
+        h3 {
+          font-size: 18px;
+          margin-bottom: 10px;
+          color: var.$color-dark-charcoal;
+        }
+
+        p {
+          font-size: 14px;
+          color: var.$color-dark;
+        }
+      }
+    }
+  }
+}
+// Social Media Icons Styling
+.social-media {
+  position: fixed;
+  left: -10px; // Position the icons on the left side
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px; // Add padding to give space to the icons from the main container
+  // margin: 10px;
+
+
+  .social-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: #495e57; // Background color for the icons
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+    
+
+    &:hover {
+      background-color: #fe6f27; // Color on hover
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .home-page {
+    flex-direction: column;
+
+    .content-wrapper {
+      flex-direction: column;
+
+      .main-content {
+        width: 100%;
+        padding-right: 0;
+
+        .blog-post {
+          .post-container {
+            flex-direction: column; // Stack image and content vertically on mobile
+          }
+        }
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+    }
+  }
+
+  // Adjust social media icons on mobile
+  .social-media {
+    left: 5px; // Slightly adjust the position for mobile view
+    .social-icon {
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
+    }
+  }
+}
+
+
+// Button Styling
+.question-btn {
+  background-color: #495e57;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #fe6f27;
+  }
+}
+.post-meta {
+  font-size: 14px; // Adjust font size as needed
+  font-family: 'Montserrat', sans-serif !important;
+  color: var.$color-simpleBlack; // Use your defined color variable
+  // margin-top: 5px; // Space between title and meta info
+  // padding: 10px;
+
+  .post-date {
+    margin-right: 10px; // Space between date and author
+  }
+}
+
+.aside-text{
+  
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 15px;
+  color: var.$color-dark-charcoal;
+  margin: 0;
+  position: relative;
+  // padding-left: 10px;
+  padding: 0 0 10px 10px;
+}
+// main section styling 
+
+.main-section {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;  // Set a max width for the section (optional, adjust as needed)
+  margin: 0 auto;  // Center the entire section
+
+  .left-image {
+    width: 65%;
+    background: url('../images/frontend.png') no-repeat center center/cover;
+    position: relative;
+    max-width: 100%; // Ensure image doesn’t stretch beyond container width
+
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #fff;
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .right-content {
+    width: 35%;
+    padding: 20px;
+
+    .about-me {
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      .about-wrapper {
+        position: relative;  // Remove flex, allowing float to work
+        display: block;
+
+        .passport-img {
+          width: 100px;
+          height: auto;
+          float: left;  // Let image float, allowing text to wrap around
+          margin-right: 15px;
+          margin-bottom: 10px;
+          border-radius: 50%;  // Optional round image (was 10px, now 50% to match other code)
+        }
+
+        .about-text {
+          line-height: 1.6;
+
+          p {
+            margin-bottom: 10px;
+            text-align: justify;  // Text wraps around the image
+          }
+        }
+      }
+
+      .about-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+
+    .follow-me {
+      margin-top: 40px;
+
+      h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      .social-media-horizontal {
+        display: flex;  // Switch to horizontal layout
+        flex-direction: row;  // Arrange icons in a row
+        justify-content: flex-start;  // Center the icons horizontally
+        gap: 10px;  // Space between icons
+      
+        .social-icon {
+          // Reuse the existing styles for the individual icons
+          display: block;
+          width: 40px;
+          height: 40px;
+          background-color: #495e57;
+          color: white;
+          text-align: center;
+          line-height: 40px;
+          border-radius: 50%;
+          font-size: 20px;
+          transition: background-color 0.3s ease;
+      
+          &:hover {
+            background-color: #fe6f27;  // Color on hover
+          }
+        }
+      }
+    }
+  }
+}
